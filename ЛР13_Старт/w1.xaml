@@ -1,0 +1,32 @@
+<Window x:Class="qwe.w1" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Чудо Обувь — вход" Height="360" Width="420" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontFamily="Calibri" FontSize="14" Background="#FFFFFF">
+<DockPanel>
+<Border DockPanel.Dock="Top" Background="#D2F6E7" Padding="12,8">
+<StackPanel Orientation="Horizontal">
+<Image x:Name="im1" Width="48" Height="48" Stretch="Uniform"/>
+<TextBlock Text="Чудо Обувь" FontSize="20" FontWeight="Bold" VerticalAlignment="Center" Margin="12,0,0,0"/>
+</StackPanel>
+</Border>
+<Grid Margin="24,20">
+<Grid.RowDefinitions>
+<RowDefinition Height="Auto"/>
+<RowDefinition Height="Auto"/>
+<RowDefinition Height="Auto"/>
+<RowDefinition Height="Auto"/>
+<RowDefinition Height="*"/>
+</Grid.RowDefinitions>
+<Grid.ColumnDefinitions>
+<ColumnDefinition Width="110"/>
+<ColumnDefinition Width="*"/>
+</Grid.ColumnDefinitions>
+<TextBlock Grid.Row="0" Text="логин" VerticalAlignment="Center"/>
+<TextBox x:Name="tb1" Grid.Row="0" Grid.Column="1" Height="28" Margin="0,0,0,10"/>
+<TextBlock Grid.Row="1" Text="пароль" VerticalAlignment="Center"/>
+<PasswordBox x:Name="tb2" Grid.Row="1" Grid.Column="1" Height="28" Margin="0,0,0,16"/>
+<StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+<Button x:Name="b2" Content="гость" Width="100" Height="30" Margin="0,0,8,0" Click="g2"/>
+<Button x:Name="b1" Content="войти" Width="110" Height="30" Background="#70B2AF" Click="go"/>
+</StackPanel>
+<TextBlock Grid.Row="3" Grid.ColumnSpan="2" Margin="0,16,0,0" Foreground="Gray" TextWrapping="Wrap" Text="учётки в файле users.txt рядом с программой"/>
+</Grid>
+</DockPanel>
+</Window>

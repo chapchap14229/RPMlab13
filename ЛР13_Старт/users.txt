@@ -1,0 +1,4 @@
+﻿#login;parol;imya
+admin;admin;Администратор
+user1;123;Клиент
+manager;111;Менеджер
