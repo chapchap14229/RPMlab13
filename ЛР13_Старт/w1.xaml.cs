@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Media.Imaging;
-namespace qwe{
+namespace Lab13{
 public partial class w1 : Window{
 // потом вынесу
 string zz;

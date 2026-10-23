@@ -4,7 +4,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-namespace qwe{
+namespace Lab13{
 public class tov{
 public string n { get; set; }
 public string k { get; set; }

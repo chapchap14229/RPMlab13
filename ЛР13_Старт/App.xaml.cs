@@ -1,5 +1,5 @@
 using System.Windows;
-namespace qwe{
+namespace Lab13{
 public partial class App : Application{
 }
 }
