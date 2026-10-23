@@ -6,19 +6,19 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 namespace Lab13{
 public class Product{
-public string n { get; set; }
-public string k { get; set; }
-public string m { get; set; }
-public string s { get; set; }
-public double p { get; set; }
-public double p2 { get; set; }
-public string ps { get; set; }
-public int q { get; set; }
-public string qt { get; set; }
-public bool f { get; set; }
-public bool f2 { get; set; }
-public string img { get; set; }
-public string fn { get; set; }
+public string Name { get; set; }
+public string Category { get; set; }
+public string Manufacturer { get; set; }
+public string Material { get; set; }
+public double Price { get; set; }
+public double PriceWithDiscount { get; set; }
+public string PriceText { get; set; }
+public int Quantity { get; set; }
+public string QuantityText { get; set; }
+public bool HasDiscount { get; set; }
+public bool IsLowStock { get; set; }
+public string ImagePath { get; set; }
+public string ImageFileName { get; set; }
 }
 public partial class MainWindow : Window{
 // потом вынесу
@@ -26,12 +26,12 @@ double b;int n1;string qwe2;List<Product> arr;
 public MainWindow(){
 InitializeComponent();
 arr = new List<Product>();
-Product t1 = new Product();t1.n = "Кроссовки Run";t1.k = "Спорт";t1.m = "Nike";t1.s = "текстиль";t1.p = 8000;t1.q = 12;t1.f = false;t1.fn = "p1.png";arr.Add(t1);
-Product t2 = new Product();t2.n = "Кроссовки Air";t2.k = "Спорт";t2.m = "Nike";t2.s = "кожа";t2.p = 10000;t2.q = 3;t2.f = true;t2.fn = "p2.png";arr.Add(t2);
-Product t3 = new Product();t3.n = "Туфли Office";t3.k = "Классика";t3.m = "Ralf";t3.s = "кожа";t3.p = 5000;t3.q = 6;t3.f = false;t3.fn = "p3.png";arr.Add(t3);
-Product t4 = new Product();t4.n = "Сапоги Winter";t4.k = "Сезон";t4.m = "Ralf";t4.s = "нубук";t4.p = 7500;t4.q = 2;t4.f = true;t4.fn = "p4.png";arr.Add(t4);
-Product t5 = new Product();t5.n = "Тапки Home";t5.k = "Дом";t5.m = "NoName";t5.s = "текстиль";t5.p = 800;t5.q = 20;t5.f = false;t5.fn = "p5.png";arr.Add(t5);
-Product t6 = new Product();t6.n = "Босоножки Summer";t6.k = "Сезон";t6.m = "Nike";t6.s = "кожа";t6.p = 3200;t6.q = 5;t6.f = true;t6.fn = "p6.png";arr.Add(t6);
+Product t1 = new Product();t1.Name = "Кроссовки Run";t1.Category = "Спорт";t1.Manufacturer = "Nike";t1.Material = "текстиль";t1.Price = 8000;t1.Quantity = 12;t1.HasDiscount = false;t1.ImageFileName = "p1.png";arr.Add(t1);
+Product t2 = new Product();t2.Name = "Кроссовки Air";t2.Category = "Спорт";t2.Manufacturer = "Nike";t2.Material = "кожа";t2.Price = 10000;t2.Quantity = 3;t2.HasDiscount = true;t2.ImageFileName = "p2.png";arr.Add(t2);
+Product t3 = new Product();t3.Name = "Туфли Office";t3.Category = "Классика";t3.Manufacturer = "Ralf";t3.Material = "кожа";t3.Price = 5000;t3.Quantity = 6;t3.HasDiscount = false;t3.ImageFileName = "p3.png";arr.Add(t3);
+Product t4 = new Product();t4.Name = "Сапоги Winter";t4.Category = "Сезон";t4.Manufacturer = "Ralf";t4.Material = "нубук";t4.Price = 7500;t4.Quantity = 2;t4.HasDiscount = true;t4.ImageFileName = "p4.png";arr.Add(t4);
+Product t5 = new Product();t5.Name = "Тапки Home";t5.Category = "Дом";t5.Manufacturer = "NoName";t5.Material = "текстиль";t5.Price = 800;t5.Quantity = 20;t5.HasDiscount = false;t5.ImageFileName = "p5.png";arr.Add(t5);
+Product t6 = new Product();t6.Name = "Босоножки Summer";t6.Category = "Сезон";t6.Manufacturer = "Nike";t6.Material = "кожа";t6.Price = 3200;t6.Quantity = 5;t6.HasDiscount = true;t6.ImageFileName = "p6.png";arr.Add(t6);
 string d = AppDomain.CurrentDomain.BaseDirectory;string lp = Path.Combine(d, "Images", "logo.png");
 if (File.Exists(lp)) {BitmapImage bi = new BitmapImage();bi.BeginInit();bi.UriSource = new Uri(lp);bi.CacheOption = BitmapCacheOption.OnLoad;bi.EndInit();im1.Source = bi;}
 doIt(null, null);
@@ -47,16 +47,16 @@ if (c1 != null) {
 string mm = c1.Content.ToString();lst1.Items.Clear();int c = 0;int i = 0;
 while (i < arr.Count) {
 Product x = arr[i];bool ok = false;
-if (t == "") {if (mm == "все") {ok = true;} else {if (x.m == mm) {ok = true;}}}
-else {if (x.n != null) {if (x.n.ToLower().Contains(t.ToLower())) {if (mm == "все") {ok = true;} else {if (x.m == mm) {ok = true;}}}}}
+if (t == "") {if (mm == "все") {ok = true;} else {if (x.Manufacturer == mm) {ok = true;}}}
+else {if (x.Name != null) {if (x.Name.ToLower().Contains(t.ToLower())) {if (mm == "все") {ok = true;} else {if (x.Manufacturer == mm) {ok = true;}}}}}
 if (ok) {
-string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");string file = x.fn;
+string dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");string file = x.ImageFileName;
 if (file == null) {file = "picture.png";} else {if (file == "") {file = "picture.png";}}
 string pp = Path.Combine(dir, file);
-if (File.Exists(pp)) {x.img = pp;} else {x.img = Path.Combine(dir, "picture.png");}
-if (x.f == true) {if (x.p > 0) {x.p2 = x.p - x.p * 0.25;} else {x.p2 = 0;}} else {x.p2 = x.p;}
-x.ps = x.p2.ToString("F2") + " руб.";x.f2 = false;
-if (x.q > 5) {x.qt = "много";} else {x.qt = "мало";if (x.q <= 3) {if (x.q > 0) {x.f2 = true;}}}
+if (File.Exists(pp)) {x.ImagePath = pp;} else {x.ImagePath = Path.Combine(dir, "picture.png");}
+if (x.HasDiscount == true) {if (x.Price > 0) {x.PriceWithDiscount = x.Price - x.Price * 0.25;} else {x.PriceWithDiscount = 0;}} else {x.PriceWithDiscount = x.Price;}
+x.PriceText = x.PriceWithDiscount.ToString("F2") + " руб.";x.IsLowStock = false;
+if (x.Quantity > 5) {x.QuantityText = "много";} else {x.QuantityText = "мало";if (x.Quantity <= 3) {if (x.Quantity > 0) {x.IsLowStock = true;}}}
 lst1.Items.Add(x);c = c + 1;
 }
 i = i + 1;
@@ -72,9 +72,9 @@ if (c1 == null) {MessageBox.Show("ошибка!!!!!!", "ошибка!!!!!!", Mes
 string mm = c1.Content.ToString();int k = 0;int i = 0;
 while (i < arr.Count) {
 Product x = arr[i];bool ok = false;
-if (t == "") {if (mm == "все") {ok = true;} else {if (x.m == mm) {ok = true;}}}
-else {if (x.n != null) {if (x.n.ToLower().Contains(t.ToLower())) {if (mm == "все") {ok = true;} else {if (x.m == mm) {ok = true;}}}}}
-if (ok) {if (x.f == true) {if (x.p > 0) {k = k + 1;}}}
+if (t == "") {if (mm == "все") {ok = true;} else {if (x.Manufacturer == mm) {ok = true;}}}
+else {if (x.Name != null) {if (x.Name.ToLower().Contains(t.ToLower())) {if (mm == "все") {ok = true;} else {if (x.Manufacturer == mm) {ok = true;}}}}}
+if (ok) {if (x.HasDiscount == true) {if (x.Price > 0) {k = k + 1;}}}
 i = i + 1;
 }
 tOut.Text = "скидок: " + k.ToString();
