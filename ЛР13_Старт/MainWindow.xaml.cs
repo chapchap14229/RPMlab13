@@ -43,6 +43,23 @@ public MainWindow(string uu) : this()
 }
 
 
+//Константы 
+private const int Zero = 0;
+private const double DiscountRate = 0.25;
+private const int ManyThreshold = 5;
+
+private const int LowStockThreshold = 3;
+
+private const string AllManufacturers = "все";
+private const string ManyText = "много";
+private const string FewText = "мало";
+private const string FoundPrefix = "найдено: ";
+private const string DiscountsPrefix = "скидок: ";
+private const string NothingFound = "ничего";
+private const string ErrorMessage = "ошибка!!!!!!"; 
+private const string DefaultImage = "picture.png";
+private const string UsersFileName = "users.txt";
+
 
 // Проверка фильтра (поиск + производитель)
 private bool Matches(Product product, string searchText, string manufacturer)
@@ -50,7 +67,7 @@ private bool Matches(Product product, string searchText, string manufacturer)
     bool nameMatches = string.IsNullOrEmpty(searchText) ||
                        (product.Name != null && product.Name.ToLower().Contains(searchText.ToLower()));
 
-    bool manufacturerMatches = (manufacturer == "все") ||
+    bool manufacturerMatches = (manufacturer == AllManufacturers) ||
                                (product.Manufacturer == manufacturer);
 
     return nameMatches && manufacturerMatches;
@@ -63,21 +80,21 @@ private void LoadImagePath(Product product)
     string file = product.ImageFileName;
 
     if (string.IsNullOrEmpty(file))
-        file = "picture.png";
+        file = DefaultImage;
 
     string fullPath = Path.Combine(dir, file);
 
     if (File.Exists(fullPath))
         product.ImagePath = fullPath;
     else
-        product.ImagePath = Path.Combine(dir, "picture.png");
+        product.ImagePath = Path.Combine(dir, DefaultImage);
 }
 
 // Скидка и текст цены
 private void ApplyDiscount(Product product)
 {
-    if (product.HasDiscount && product.Price > 0)
-        product.PriceWithDiscount = product.Price - product.Price * 0.25;
+    if (product.HasDiscount && product.Price > Zero)
+        product.PriceWithDiscount = product.Price - product.Price * DiscountRate;
     else
         product.PriceWithDiscount = product.Price;
 
@@ -89,14 +106,14 @@ private void UpdateQuantityText(Product product)
 {
     product.IsLowStock = false;
 
-    if (product.Quantity > 5)
+    if (product.Quantity > ManyThreshold)
     {
-        product.QuantityText = "много";
+        product.QuantityText = ManyText;
     }
     else
     {
-        product.QuantityText = "мало";
-        if (product.Quantity <= 3 && product.Quantity > 0)
+        product.QuantityText = FewText;
+        if (product.Quantity <= LowStockThreshold && product.Quantity > Zero)
             product.IsLowStock = true;
     }
 }
@@ -107,7 +124,7 @@ private void BtnSearch_Click(object sender, RoutedEventArgs e)
     ComboBoxItem manufacturerItem = ManufacturerComboBox.SelectedItem as ComboBoxItem;
     if (manufacturerItem == null)
     {
-        MessageBox.Show("ошибка!!!!!!", "ошибка!!!!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
+        MessageBox.Show(ErrorMessage, ErrorMessage, MessageBoxButton.OK, MessageBoxImage.Warning);
         return;
     }
 
@@ -115,7 +132,7 @@ private void BtnSearch_Click(object sender, RoutedEventArgs e)
     string manufacturerName = manufacturerItem.Content.ToString();
 
     ProductsListBox.Items.Clear();
-    int foundCount = 0;
+    int foundCount = Zero;
 
     foreach (Product product in _products)
     {
@@ -129,10 +146,10 @@ private void BtnSearch_Click(object sender, RoutedEventArgs e)
         foundCount++;
     }
 
-    StatusTextBlock.Text = "найдено: " + foundCount;
+    StatusTextBlock.Text = FoundPrefix + foundCount;
 
-    if (foundCount == 0)
-        MessageBox.Show("ничего", "ошибка!!!!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
+    if (foundCount == Zero)
+        MessageBox.Show(NothingFound, ErrorMessage, MessageBoxButton.OK, MessageBoxImage.Warning);
 }
 
 // Скидки
@@ -141,14 +158,14 @@ private void BtnDiscounts_Click(object sender, RoutedEventArgs e)
     ComboBoxItem manufacturerItem = ManufacturerComboBox.SelectedItem as ComboBoxItem;
     if (manufacturerItem == null)
     {
-        MessageBox.Show("ошибка!!!!!!", "ошибка!!!!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
+        MessageBox.Show(ErrorMessage,ErrorMessage, MessageBoxButton.OK, MessageBoxImage.Warning);
         return;
     }
 
     string searchText = SearchTextBox.Text ?? "";
     string manufacturerName = manufacturerItem.Content.ToString();
 
-    int discountCount = 0;
+    int discountCount = Zero;
 
     foreach (Product product in _products)
     {
@@ -156,7 +173,7 @@ private void BtnDiscounts_Click(object sender, RoutedEventArgs e)
         if (product.HasDiscount) discountCount++;
     }
 
-    StatusTextBlock.Text = "скидок: " + discountCount;
+    StatusTextBlock.Text = DiscountsPrefix + discountCount;
 }
 }
 }
