@@ -11,6 +11,10 @@ InitializeComponent();
 string d = AppDomain.CurrentDomain.BaseDirectory;string lp = Path.Combine(d, "Images", "logo.png");
 if (File.Exists(lp)) {BitmapImage bi = new BitmapImage();bi.BeginInit();bi.UriSource = new Uri(lp);bi.CacheOption = BitmapCacheOption.OnLoad;bi.EndInit();im1.Source = bi;}
 }
+
+
+
+//go под разбор 
 private void go(object sender, RoutedEventArgs e){
 string u = tb1.Text;string p = tb2.Password;
 if (u != "") {
